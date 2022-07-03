@@ -577,7 +577,7 @@ if __name__ == "__main__":
     if len(user_list) == len(passwd_list):
         to_push.push_msg = ''
         for user, passwd, step_ in zip(user_list, passwd_list, step_list):
-        	setp_array = step_.split('-')
+            setp_array = step_.split('-')
             if len(setp_array) == 2:
                 step = str(random.randint(int(setp_array[0]), int(setp_array[1])))
                 print(f"已设置为随机步数（{setp_array[0]}-{setp_array[1]}）")
