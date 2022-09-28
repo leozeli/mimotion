@@ -95,7 +95,7 @@ def main(_user, _passwd, _step):
         return "login fail!"
 
     t = get_time()
-
+    print(_user,_passwd,_step)
     app_token = get_app_token(login_token)
 
     today = time.strftime("%F")
