@@ -28,11 +28,11 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install flake8 pytest
+        pip install flake8 pytest requests
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         pmode='${{ secrets.PMODE }}'
         pkey='${{ secrets.PKEY }}'
         user='${{ secrets.USER }}'
         pwd='${{ secrets.PWD }}'
         step='${{ secrets.STEP }}'
-        python3 main_t.py ${pmode} ${pkey} ${user} ${pwd} ${step}
+        python main_t.py ${pmode} ${pkey} ${user} ${pwd} ${step}
