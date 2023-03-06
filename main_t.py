@@ -118,7 +118,7 @@ def main(_user, _passwd, _step):
     data = f'userid={userid}&last_sync_data_time=1597306380&device_type=0&last_deviceid=DA932FFFFE8816E7&data_json={data_json}'
 
     response = requests.post(url, data=data, headers=head).json()
-    #print(response)
+    print(response)
     result = f"{user[:4]}****{user[-4:]}: [{now}] 修改步数（{step}）"+ response['message']
     print(result)
     return result
@@ -155,7 +155,6 @@ if __name__ == "__main__":
         Pm = sys.argv[1]
         pkey = sys.argv[2]
 
-
         # 用户名（格式为 13800138000）
         user = sys.argv[3]
         # 登录密码
@@ -176,10 +175,9 @@ if __name__ == "__main__":
             if len(setp_array) == 2:
                 step = str(random.randint(int(setp_array[0]), int(setp_array[1])))
                 print(f"已设置为随机步数（{setp_array[0]}-{setp_array[1]}）")
+                main(user, passwd, step)
             elif str(step) == '0':
                 step = ''
-
-
-
+                main(usr, passwd, step)
     else:
         print('用户名和密码数量不对')
