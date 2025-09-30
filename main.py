@@ -15,6 +15,24 @@ import requests
 from Crypto.Cipher import AES
 
 
+# 加载.env文件
+def load_env_file(file_path='.env'):
+    """Load configuration from .env JSON file"""
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            config = json.load(f)
+        return config
+    except FileNotFoundError:
+        print(f"环境配置文件 {file_path} 未找到")
+        return None
+    except json.JSONDecodeError as e:
+        print(f"解析环境配置文件JSON格式时出错: {e}")
+        return None
+    except Exception as e:
+        print(f"读取环境配置文件时出错: {e}")
+        return None
+
+
 # 获取北京时间
 def get_beijing_time():
     target_timezone = pytz.timezone('Asia/Shanghai')
@@ -337,18 +355,14 @@ def execute():
 if __name__ == "__main__":
     # 北京时间
     time_bj = get_beijing_time()
-    if os.environ.__contains__("CONFIG") is False:
-        print("未配置CONFIG变量，无法执行")
+    # 从.env文件加载配置
+    config = load_env_file()
+    if config is None:
+        print("未找到或无法解析.env配置文件，无法执行")
         exit(1)
     else:
         # region 初始化参数
-        config = dict()
-        try:
-            config = dict(json.loads(os.environ.get("CONFIG")))
-        except:
-            print("CONFIG格式不正确，请检查Secret配置，请严格按照JSON格式：使用双引号包裹字段和值，逗号不能多也不能少")
-            traceback.print_exc()
-            exit(1)
+        # config已经是从.env文件加载的字典，无需再次解析
         PUSH_PLUS_TOKEN = config.get('PUSH_PLUS_TOKEN')
         PUSH_PLUS_HOUR = config.get('PUSH_PLUS_HOUR')
         PUSH_PLUS_MAX = get_int_value_default(config, 'PUSH_PLUS_MAX', 30)
